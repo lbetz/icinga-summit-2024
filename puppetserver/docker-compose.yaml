@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+  puppet:
+    image: ghcr.io/voxpupuli/container-puppetserver:8.6.0-latest
+    hostname: puppet
+    environment:
+      - PUPPETSERVER_HOSTNAME=puppet
+      - PUPPETSERVER_PORT=8140
+      - PUPPETDB_HOSTNAME=puppetdb
+      - PUPPETDB_SSL_PORT=8081
+      - USE_PUPPETDB=false
+      - AUTOSIGN=true
+      - PUPPETSERVER_ENVIRONMENT_TIMEOUT=0
+    volumes:
+      - puppetserver:/opt/puppetlabs/server/data/puppetserver
+      - puppetserver-ssl:/etc/puppetlabs/puppet/ssl
+      - puppetserver-ca:/etc/puppetlabs/puppetserver/ca
+      - ./code:/etc/puppetlabs/code
+    restart: always
+    ports:
+      - 8140:8140
+
+  puppetdb:
+    image: ghcr.io/voxpupuli/container-puppetdb:8.5.0-latest
+    hostname: puppetdb
+    environment:
+      - USE_PUPPETSERVER=true
+      - PUPPETSERVER_HOSTNAME=puppet
+      - PUPPETSERVER_PORT=8140
+      - PUPPETDB_SSL_PORT=8081
+      - PUPPETDB_POSTGRES_HOSTNAME=postgres
+      - PUPPETDB_POSTGRES_DATABASE=${POSTGRES_DB:-puppetd}
+      - PUPPETDB_POSTGRES_PORT=5432
+      - PUPPETDB_PASSWORD=${POSTGRES_PASSWORD:-puppetdb}
+      - PUPPETDB_USER=${POSTGRES_USER:-puppetdb}
+    volumes:
+      - puppetdb:/opt/puppetlabs/server/data/puppetdb
+    restart: always
+    
+  postgres:
+    image: docker.io/postgres:16-alpine
+    hostname: postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-puppetdb}
+      - POSTGRES_USER=${POSTGRES_USER:-puppetdb}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-puppetdb}
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    volumes:
+      - puppetdb-postgres:/var/lib/postgresql/data
+      - ./postgresql_init:/docker-entrypoint-initdb.d
+    restart: always
+
+volumes:
+  puppetserver:
+  puppetserver-ssl:
+  puppetserver-ca:
+  puppetdb:
+  puppetdb-postgres:

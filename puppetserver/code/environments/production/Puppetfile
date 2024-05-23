@@ -1,0 +1,24 @@
+forge 'https://forgeapi.puppetlabs.com/'
+
+mod 'puppetlabs/yumrepo_core'
+mod 'puppetlabs/apache'
+mod 'puppetlabs/apt'
+mod 'puppet/archive'
+mod 'puppetlabs/concat'
+mod 'puppetlabs/inifile'
+mod 'puppetlabs/mysql'
+mod 'puppet/redis'
+mod 'puppet/php'
+mod 'puppetlabs/postgresql'
+mod 'puppetlabs/stdlib'
+mod 'puppet/systemd'
+mod 'puppetlabs/vcsrepo'
+mod 'icinga/icinga2'
+mod 'icinga/icingadb'
+mod 'icinga/icingaweb2'
+mod 'puppet/icinga'
+
+mod 'theforeman/puppet'
+mod 'puppet/extlib'
+
+mod 'profile', :local => true
