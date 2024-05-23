@@ -1,0 +1,2 @@
+puppetserver/code/**/modules/*
+!puppetserver/code/**/modules/profile
