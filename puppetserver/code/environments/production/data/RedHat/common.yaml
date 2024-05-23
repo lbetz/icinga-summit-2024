@@ -1,0 +1,9 @@
+---
+icinga::repos:
+  icinga-stable-release:
+    baseurl: 'https://packages.icinga.com/subscription/rhel/$releasever/release/'
+    username: icinga-summit-2024
+    password: Summit2024
+icinga::repos::manage_epel: true
+icinga::repos::manage_powertools: true
+icinga::repos::manage_crb: true

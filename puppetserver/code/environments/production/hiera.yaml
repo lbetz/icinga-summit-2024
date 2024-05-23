@@ -6,6 +6,14 @@ defaults:
 hierarchy:
   - name: "Per-node data (yaml version)"
     path: "nodes/%{::trusted.certname}.yaml"
+  - name: 'Operating System'
+    paths:
+      - "%{facts.os.family}/%{facts.os.name}/%{facts.os.release.major}.%{facts.os.release.minor}.yaml"
+      - "%{facts.os.family}/%{facts.os.name}/%{facts.os.release.major}.yaml"
+      - "%{facts.os.family}/%{facts.os.name}/common.yaml"
+      - "%{facts.os.family}/%{facts.os.release.major}.yaml"
+      - "%{facts.os.family}/common.yaml"
+      - "%{facts.kernel}-kernel.yaml"
   - name: "Other YAML hierarchy levels"
     paths:
       - "common.yaml"

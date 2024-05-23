@@ -1,6 +1,8 @@
 class profile::icinga::server (
   Enum['mysql', 'pgsql']   $db_type = 'pgsql',
 ) {
+  require icinga::repos
+
   class { 'icinga::server':
     ca                => true,
     config_server     => true,
