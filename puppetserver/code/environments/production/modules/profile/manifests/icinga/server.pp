@@ -1,7 +1,7 @@
 class profile::icinga::server (
   Enum['mysql', 'pgsql']   $db_type = 'pgsql',
 ) {
-  require icinga::repos
+  assert_private()
 
   class { 'icinga::server':
     ca                => true,

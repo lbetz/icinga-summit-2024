@@ -5,7 +5,7 @@ defaults:
   data_hash: yaml_data
 hierarchy:
   - name: "Per-node data (yaml version)"
-    path: "nodes/%{::trusted.certname}.yaml"
+    path: "nodes/%{facts.networking.hostname}.yaml"
   - name: 'Operating System'
     paths:
       - "%{facts.os.family}/%{facts.os.name}/%{facts.os.release.major}.%{facts.os.release.minor}.yaml"
