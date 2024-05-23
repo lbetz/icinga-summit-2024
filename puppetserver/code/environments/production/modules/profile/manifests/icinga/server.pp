@@ -6,7 +6,6 @@ class profile::icinga::server (
     config_server     => true,
     global_zones      => ['global-templates', 'linux-commands', 'windows-commands'],
     web_api_pass      => Sensitive('icingaweb2'),
-    director_api_pass => Sensitive('director'),
     run_web           => true,
   }
 
