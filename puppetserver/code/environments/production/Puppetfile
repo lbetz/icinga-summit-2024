@@ -14,18 +14,8 @@ mod 'puppetlabs/stdlib'
 mod 'puppet/systemd'
 mod 'puppetlabs/vcsrepo'
 mod 'puppet/icinga'
-
-mod 'theforeman/puppet'
-mod 'puppet/extlib'
+mod 'puppet/icinga2'
+mod 'puppet/icingadb'
+mod 'puppet/icingaweb2'
 
 mod 'profile', :local => true
-
-mod 'icinga2',
-  :git => 'https://github.com/voxpupuli/puppet-icinga2',
-  :branch => 'main'
-mod 'icingadb',
-  :git => 'https://github.com/voxpupuli/puppet-icingadb',
-  :branch => 'main'
-mod 'icingaweb2',
-  :git => 'https://github.com/voxpupuli/puppet-icingaweb2',
-  :branch => 'main'
