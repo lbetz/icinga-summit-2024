@@ -1,3 +1,6 @@
+# A Generic Icinga Class
+
+```puppet
 class profile::icinga (
   Enum['agent', 'worker', 'server']   $type = 'agent',
 ) {
@@ -19,3 +22,6 @@ class profile::icinga (
     }
   }
 }
+```
+
+Reference of [icinga::repos](https://github.com/voxpupuli/puppet-icinga/blob/main/REFERENCE.md#icinga--repos)
