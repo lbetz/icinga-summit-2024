@@ -1,3 +1,6 @@
+# A Class for the Icinga Server
+
+```puppet
 class profile::icinga::server (
   Enum['mysql', 'pgsql']   $db_type = 'pgsql',
 ) {
@@ -31,3 +34,6 @@ class profile::icinga::server (
     db_pass => $icinga::db::db_pass,
   }
 }
+```
+
+For available parameters of all used classes, see [here}(https://github.com/voxpupuli/puppet-icinga/blob/main/REFERENCE.md).

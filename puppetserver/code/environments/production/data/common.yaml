@@ -1,3 +1,2 @@
 ---
 icinga::ticket_salt: topsecret
-icinga::repos::manage_extras: true
