@@ -5,6 +5,7 @@ class profile::icinga (
   case $type {
     'agent': {
       include icinga::repos
+      include icinga::agent
     } # agent
 
     'worker': {
