@@ -2,6 +2,9 @@
 
 data/common.yaml
 ```yaml
++icinga::cert_name: "%{facts.networking.fqdn}"
+ icinga::ticket_salt: topsecret
+
  icinga::agent::parent_endpoints:
    server.icinga.summit2024.berlin:
       host: "%{lookup('icinga::agent::ca_server')}"
