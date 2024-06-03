@@ -16,6 +16,7 @@ data/RedHat/common.yaml:
 ---
 icinga::extra_packages:
   - nagios-plugins-all
+
 icinga::repos:
   icinga-stable-release:
     baseurl: 'https://packages.icinga.com/subscription/rhel/$releasever/release/'

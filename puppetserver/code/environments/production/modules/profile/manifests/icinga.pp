@@ -5,17 +5,17 @@ class profile::icinga (
   case $type {
     'agent': {
       include icinga::repos
-    }
+    } # agent
 
     'worker': {
       include icinga::repos
-    }
+    } # worker
 
     'server': {
       class { 'icinga::repos':
         manage_extras => true,
       }
       include profile::icinga::server
-    }
+    } # server
   }
 }

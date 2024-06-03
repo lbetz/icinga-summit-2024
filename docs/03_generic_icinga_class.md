@@ -2,7 +2,6 @@
 
 Do not forget to customize your site manifest!
 
-```puppet
 class profile::icinga (
   Enum['agent', 'worker', 'server']   $type = 'agent',
 ) {
