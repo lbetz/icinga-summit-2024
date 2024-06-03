@@ -12,6 +12,20 @@ class profile::icinga (
       $zone        = $node
       $parent_zone = $icinga::agent::parent_zone
       $target      = "/etc/icinga2/zones.d/${parent_zone}/${node}.conf"
+
+      $_objects    = {
+        'Zone' => {
+          $zone => {
+            'endpoints' => [$node],
+            'parent'    => $parent_zone,
+          },
+        },
+        'Endpoint' => {
+          $node => {
+            'log_duration' => 0,
+          },
+        },
+      }
     } # agent
 
     'worker': {
@@ -24,13 +38,15 @@ class profile::icinga (
       }
       include profile::icinga::server
 
-      $node        = $icinga::cert_name
-      $zone        = $icinga::server::zone
-      $target      = "/etc/icinga2/zones.d/${zone}/${node}.conf"
+      $node     = $icinga::cert_name
+      $zone     = $icinga::server::zone
+      $target   = "/etc/icinga2/zones.d/${zone}/${node}.conf"
+
+      $_objects = {}
     } # server
   }
 
-  $objects.each |String $type, Hash $objs| {
+  deep_merge($_objects, $objects).each |String $type, Hash $objs| {
     notify { $type:
       message => $objs.reduce({}) |$memo, $obj| {
         if $obj[1]['target'] {
