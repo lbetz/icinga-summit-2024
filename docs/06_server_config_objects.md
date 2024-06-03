@@ -16,7 +16,7 @@ class profile::icinga (
  }
 ```
 
-data/nodes/<your server>.yaml:
+data/nodes/changeme-server.yaml:
 ```yaml
 profile::icinga::objects:
   Host:
