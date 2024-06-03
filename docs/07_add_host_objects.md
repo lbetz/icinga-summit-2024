@@ -23,16 +23,33 @@ data/common.yaml
 ```
 
 ```puppet
+ class profile::icinga (
+[...]
+     'agent': {
+       include icinga::repos
+       include icinga::agent
++
++      $node        = $icinga::cert_name
++      $zone        = $node
++      $parent_zone = $icinga::agent::parent_zone
++      $target      = "/etc/icinga2/zones.d/${parent_zone}/${node}.conf"
+     } # agent
+[...]
+       include profile::icinga::server
++
++      $node        = $icinga::cert_name
++      $zone        = $icinga::server::zone
++      $target      = "/etc/icinga2/zones.d/${zone}/${node}.conf"
+     } # server
+   }
+
    $objects.each |String $type, Hash $objs| {
      notify { $type:
 -      message => $objs,
 +      message => $objs.reduce({}) |$memo, $obj| {
-+        if $obj[1]['target'] {
-+          $memo + { $obj[0] => $obj[1] }
-+        } else {
-+          $memo + { $obj[0] => $obj[1] + {
-+              'target' => $target }}
-+        }
++        $memo + { $obj[0] => $obj[1] + {
++            'target' => $target }}
 +      },
      }
    }
+```
