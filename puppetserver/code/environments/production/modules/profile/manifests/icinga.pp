@@ -39,7 +39,7 @@ class profile::icinga (
             'import'           => ['generic-service'],
             'check_command'    => 'cluster-zone',
           },
-        },
+        } + profile::icinga::disks($node),
       }
     } # agent
 
@@ -70,7 +70,7 @@ class profile::icinga (
             'import'           => ['generic-service'],
             'check_command'    => 'icingadb',
           },
-        },
+        } + profile::icinga::disks($node),
       }
 
       # Collect all eported Icinga config objects
