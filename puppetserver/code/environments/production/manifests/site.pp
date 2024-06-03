@@ -1,3 +1,3 @@
 node default {
-  notify { 'Node has no definition!': }
+  include profile::icinga
 }
