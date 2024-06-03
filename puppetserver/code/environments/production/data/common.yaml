@@ -13,6 +13,11 @@ profile::icinga::objects:
       import: ['generic-host']
       display_name: "%{facts.networking.hostname}"
       address: "%{facts.networking.interfaces.eth1.ip}"
+  Service:
+    ping4:
+      host_name: "%{lookup('icinga::cert_name')}"
+      import: ['generic-service']
+      check_command: ping4
 
 lookup_options:
   'profile::icinga::objects':
