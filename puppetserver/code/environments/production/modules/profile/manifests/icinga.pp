@@ -1,4 +1,5 @@
 class profile::icinga (
+  String                              $config_server,
   Enum['agent', 'worker', 'server']   $type    = 'agent',
   Hash[String, Hash]                  $objects = {},
 ) {
@@ -12,6 +13,7 @@ class profile::icinga (
       $zone        = $node
       $parent_zone = $icinga::agent::parent_zone
       $target      = "/etc/icinga2/zones.d/${parent_zone}/${node}.conf"
+      $export      = $config_server
 
       $_objects    = {
         'Zone' => {
@@ -41,21 +43,30 @@ class profile::icinga (
       $node     = $icinga::cert_name
       $zone     = $icinga::server::zone
       $target   = "/etc/icinga2/zones.d/${zone}/${node}.conf"
+      $export   = []
 
       $_objects = {}
+
+      # Collect all eported Icinga config objects
+      class { 'icinga2::query_objects':
+        destination  => $config_server,
+      }
     } # server
   }
 
   deep_merge($_objects, $objects).each |String $type, Hash $objs| {
-    notify { $type:
-      message => $objs.reduce({}) |$memo, $obj| {
+    ensure_resources(
+      downcase("icinga2::object::$type"),
+      $objs.reduce({}) |$memo, $obj| {
         if $obj[1]['target'] {
-          $memo + { $obj[0] => $obj[1] }
+          $memo + { $obj[0] => $obj[1] + {
+              'export' => $export }}
         } else {
           $memo + { $obj[0] => $obj[1] + {
+              'export' => $export,
               'target' => $target }}
         }
-      },
-    }
+      }
+    ) 
   }
 }

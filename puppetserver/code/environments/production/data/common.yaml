@@ -7,6 +7,7 @@ icinga::agent::parent_endpoints:
   server.icinga.summit2024.berlin:
      host: "%{lookup('icinga::agent::ca_server')}"
 
+profile::icinga::config_server: server.icinga.summit2024.berlin
 profile::icinga::objects:
   Host:
     "%{lookup('icinga::cert_name')}":
