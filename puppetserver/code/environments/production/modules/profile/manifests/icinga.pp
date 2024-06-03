@@ -58,7 +58,20 @@ class profile::icinga (
       $target   = "/etc/icinga2/zones.d/${zone}/${node}.conf"
       $export   = []
 
-      $_objects = {}
+      $_objects = {
+        'Service' => {
+          'icinga' => {
+            'host_name'        => $node,
+            'import'           => ['generic-service'],
+            'check_command'    => 'icinga',
+          },
+          'icingadb' => {
+            'host_name'        => $node,
+            'import'           => ['generic-service'],
+            'check_command'    => 'icingadb',
+          },
+        },
+      }
 
       # Collect all eported Icinga config objects
       class { 'icinga2::query_objects':
