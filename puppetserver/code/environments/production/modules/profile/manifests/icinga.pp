@@ -6,7 +6,9 @@ class profile::icinga (
 
   case $type {
     'agent': {
-      include icinga::repos
+      if $facts['kernel'] != 'windows' {
+        include icinga::repos
+      }
       include icinga::agent
 
       $node        = $icinga::cert_name

@@ -1,0 +1,7 @@
+---
+icinga::agent::logging_type: file
+
+profile::icinga::objects:
+  Host:
+    "%{lookup('icinga::cert_name')}":
+      address: "%{facts.networking.interfaces.Ethernet 2.ip}"

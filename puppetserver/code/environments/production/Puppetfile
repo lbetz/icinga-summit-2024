@@ -18,4 +18,7 @@ mod 'puppet/icinga2'
 mod 'puppet/icingadb'
 mod 'puppet/icingaweb2'
 
+mod 'puppetlabs/chocolatey'
+mod 'dylanratcliffe-windows_disk_facts'
+
 mod 'profile', :local => true
